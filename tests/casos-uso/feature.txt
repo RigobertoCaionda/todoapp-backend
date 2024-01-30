@@ -1,0 +1,74 @@
+O sistema de gerenciamento de tarefas pode ter diversos casos de uso, incluindo:
+
+1-Registro de Usuário:
+
+Permitir que usuários se cadastrem no sistema.
+
+2-Autenticação:
+
+Garantir que apenas usuários autenticados possam acessar suas tarefas.
+
+3-Adição de Tarefas:
+
+Usuários devem ser capazes de adicionar novas tarefas à sua lista.
+
+4-Atualização de Tarefas:
+
+Permitir a edição de tarefas existentes.
+
+5-Exclusão de Tarefas:
+
+Possibilitar que usuários removam tarefas quando concluídas ou não necessárias.
+
+6-Visualização de Tarefas:
+
+Exibir uma lista de tarefas para cada usuário.
+
+7-Priorização de Tarefas:
+
+Opção para definir prioridades ou categorias para tarefas.
+
+8-Conclusão de Tarefas:
+
+Marcar tarefas como concluídas.
+
+9-Notificações:
+
+Implementar notificações para prazos ou eventos importantes.
+
+10-Compartilhamento de Tarefas:
+
+Permitir que os usuários compartilhem tarefas com outros usuários.
+
+11-Histórico de Atividades:
+
+Registrar e exibir um histórico de atividades do usuário.
+
+
+
+Claro! O ponto 7 refere-se à "Priorização de Tarefas". Nesse caso, você pode permitir que os usuários atribuam prioridades ou categorias às suas tarefas. Por exemplo:
+
+Alta Prioridade: Tarefas urgentes ou críticas.
+Média Prioridade: Tarefas importantes, mas com menos urgência.
+Baixa Prioridade: Tarefas que podem aguardar.
+
+Isso pode ser feito através de uma propriedade em cada tarefa que indica sua prioridade. Ao implementar esse recurso, os usuários podem organizar e visualizar suas tarefas de acordo com sua importância, facilitando a gestão e execução do trabalho diário.
+
+
+Certamente! O ponto 11 se refere a "Histórico de Atividades". Ao implementar esse recurso, você pode registrar todas as atividades relevantes realizadas pelo usuário no sistema. Isso pode incluir:
+
+Adição de Tarefas: Registrar quando uma nova tarefa é criada.
+Atualização de Tarefas: Registrar as alterações feitas em uma tarefa, como edições de descrição, mudanças de prazo, etc.
+Exclusão de Tarefas: Registrar quando uma tarefa é removida.
+Conclusão de Tarefas: Registrar quando uma tarefa é marcada como concluída.
+Outras Ações: Registre qualquer outra ação relevante que o usuário execute no sistema.
+
+Manter um histórico de atividades oferece benefícios, como rastreamento de alterações, auditoria e uma visão geral do que ocorreu ao longo do tempo. Pode ser útil para os usuários acompanharem suas próprias ações ou, em alguns casos, para fins de segurança e conformidade.
+
+O ponto 9, "Notificações", refere-se à implementação de um sistema de alertas ou mensagens automáticas para informar os usuários sobre eventos importantes relacionados às suas tarefas. Aqui estão alguns cenários nos quais notificações podem ser úteis:
+
+Prazo se Aproximando: Notificar o usuário quando o prazo de uma tarefa está próximo ou quando uma tarefa está prestes a vencer.
+Tarefa Concluída: Informar o usuário quando uma de suas tarefas é marcada como concluída.
+Atualizações de Tarefas: Notificar sobre alterações importantes em uma tarefa, como mudanças no prazo ou descrição.
+
+As notificações podem ser enviadas por e-mail, mensagens no aplicativo, ou até mesmo por meio de mensagens de sistema, dependendo da preferência do usuário. Isso ajuda a manter os usuários informados e engajados com o sistema, melhorando a experiência geral de uso.
