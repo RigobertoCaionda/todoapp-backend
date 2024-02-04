@@ -13,6 +13,9 @@ export default class Task extends BaseModel {
   @column()
   public priorityId: number;
 
+  @column()
+  public finished: boolean;
+
   @belongsTo(() => Priority)
   public priority: BelongsTo<typeof Priority>;
 

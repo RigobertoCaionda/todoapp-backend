@@ -19,17 +19,15 @@ export default class UsersController {
   }
 
   public async store({ request, response }: HttpContextContract) {
-    const body = request.all() as UserProps
-
-    const userDto = {
-      password: body.password,
-      age: body.age,
-      email: body.email,
-      nome: body.nome
-    };
+    const { password, age, email, nome } = request.all() as UserProps
 
     try {
-      const result = await this.userService.execute(userDto);
+      const result = await this.userService.execute({
+        password,
+        age,
+        email,
+        nome,
+      });
 
       return response.json(result)
     } catch (error) {
@@ -45,9 +43,9 @@ export default class UsersController {
 
   public async update({ params, request, response }: HttpContextContract) {
     const { id } = params;
-    const body = request.all() as UserProps;
+    const { age, email, nome, password } = request.all() as UserProps;
     try {
-     await this.userService.update(id, body);
+     await this.userService.update(id, { age, email, nome, password });
       return response.json('User updated successfully')
     } catch (error) {
       return response.json(error)

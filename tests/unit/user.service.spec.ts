@@ -1,6 +1,8 @@
-import { test } from "@japa/runner";
+import Database from "@ioc:Adonis/Lucid/Database";
+import { test, } from "@japa/runner";
 import { UserRepository } from "App/Repositories/user.repository";
 import { UserService } from "App/Services/user/user.service";
+import { UserFactory } from "Database/factories/UserFactory";
 import sinon from "sinon";
 
 // Função comum para configuração antes dos testes
@@ -25,18 +27,28 @@ async function beforeEachSetup() {
   };
 }
 
-test.group("UserService", () => {
+test.group("UserService", (group) => {
+  // Cria as migrações e apaga elas antes de cada teste
+  group.each.setup(async () => {
+    await Database.beginGlobalTransaction();
+    return async () => await Database.rollbackGlobalTransaction();
+  });
+
   test("should list users without pagination when withPagination is false", async ({
     assert,
   }) => {
-    const { paginationData } = await beforeEachSetup()
-   paginationData.perPage = 0;
+    const { paginationData } = await beforeEachSetup();
+    paginationData.perPage = 0;
     const { userService } = await setup();
 
+    await UserFactory.createMany(4);
+
     const result = await userService.query(paginationData);
+
     assert.notExists((result as any).total);
     assert.notExists((result as any).page);
     assert.notExists((result as any).perPage);
+    assert.isArray(result, "Result should be an array");
   });
   test("should list users with pagination when withPagination is true", async ({
     assert,
@@ -47,22 +59,24 @@ test.group("UserService", () => {
 
     const { userService } = await setup();
 
+    await UserFactory.createMany(4);
+
     const result = await userService.query(paginationData);
-    assert.equal((result as any).total, 1, "total should be 1");
+
+    assert.equal((result as any).total, 4, "total should be 4");
     assert.equal((result as any).page, 1);
     assert.equal((result as any).perPage, 3);
-    assert.isDefined((result as any).data);
+    assert.isArray((result as any).data, "result.data should be an array");
   });
 
   test("should create user successfully", async ({ assert }) => {
-
     const { inputUserData } = await beforeEachSetup();
 
     const newinputUserData = {
       id: 2,
       email: "bro@gmail.com",
       age: 26,
-      nome: 'Bro Gomes'
+      nome: "Bro Gomes",
     };
     const { userService } = await setup();
     const result = await userService.execute(inputUserData);
@@ -76,9 +90,8 @@ test.group("UserService", () => {
   test("should not create user succefully if email is undefined or empty", async ({
     assert,
   }) => {
-
     const { inputUserData } = await beforeEachSetup();
-    inputUserData.email = ''
+    inputUserData.email = "";
     const { userService } = await setup();
 
     const result = await userService.execute(inputUserData);
@@ -87,9 +100,8 @@ test.group("UserService", () => {
   test("should not create user succefully if name is undefined or empty", async ({
     assert,
   }) => {
-
     const { inputUserData } = await beforeEachSetup();
-    inputUserData.nome = ''
+    inputUserData.nome = "";
     const { userService } = await setup();
 
     const result = await userService.execute(inputUserData);
@@ -100,7 +112,7 @@ test.group("UserService", () => {
     assert,
   }) => {
     const { inputUserData } = await beforeEachSetup();
-    inputUserData.password = ''
+    inputUserData.password = "";
     const { userService } = await setup();
 
     const result = await userService.execute(inputUserData);
@@ -108,45 +120,48 @@ test.group("UserService", () => {
   });
 
   test("should list just one user", async ({ assert }) => {
-    const id = 1;
     const { userService } = await setup();
-    const findOneSpy = sinon.spy(userService, "findOne");
-    const result = await userService.findOne(id);
 
-    assert.equal((result as any)?.id, id);
+    const user = await UserFactory.create();
+
+    const findOneSpy = sinon.spy(userService, "findOne");
+    const result = await userService.findOne(user.id);
+
+    assert.equal((result as any)?.id, user.id);
     assert.equal(findOneSpy.calledOnce, true);
 
     findOneSpy.restore();
   });
   test("should update a user succefully", async ({ assert }) => {
     let inputUserData = {
-      id: 1,
       email: "pedro@gmail.com",
       age: 76,
-      nome: 'Jorge'
+      nome: "Jorge",
     };
 
-    const id = 1;
     const { userService } = await setup();
-    const result = await userService.update(id, inputUserData);
+    const user = await UserFactory.create();
+    const result = await userService.update(user.id, inputUserData);
 
     let resultInput = {
       email: result.email,
       age: result.age,
       id: result.id,
-      nome: result.nome
+      nome: result.nome,
     };
 
-    assert.equal((result as any)?.id, id);
+    assert.equal((result)?.id, user.id);
 
-    assert.deepEqual(resultInput, inputUserData);
+    assert.deepEqual(resultInput, { ...inputUserData, id: user.id });
   });
 
   test("should delete a user successfully", async ({ assert }) => {
     const { userService } = await setup();
-    const id = 1;
-    await userService.delete(id);
-    const user = userService.findOne(id);
-    assert.notExists((user as any).id);
+    const user = await UserFactory.create();
+
+    await userService.delete(user.id);
+    const deletedUser = await userService.findOne(user.id);
+
+    assert.notExists((deletedUser as any).id);
   });
 });
