@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, BelongsTo, belongsTo, column } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, HasMany, belongsTo, column, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import Priority from './Priority';
 import User from './User';
+import SharingTask from './SharingTask';
 
 export default class Task extends BaseModel {
   @column({ isPrimary: true })
@@ -24,6 +25,9 @@ export default class Task extends BaseModel {
 
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>;
+
+  @hasMany(() => SharingTask)
+  public sharedTasks: HasMany<typeof SharingTask>;
 
   @column()
   public startDate: DateTime;

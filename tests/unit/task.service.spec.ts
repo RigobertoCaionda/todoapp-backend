@@ -398,7 +398,7 @@ test.group("TaskService", (group) => {
     await task3.merge({ descricao: 'Tarefa 3', userId: users[0].id }).save()
     await task4.merge({ descricao: 'Tarefa 4', finished: true, userId: users[1].id }).save()
 
-    const finishedTasks = await taskService.query(paginationData, {'user_id': users[0].id, 'finished': true  })
+    const finishedTasks = await taskService.query(paginationData, {'userId': users[0].id, 'finished': true  })
     expect((finishedTasks as any).length).toEqual(2)
     expect(finishedTasks[0].descricao).toEqual("Tarefa 1");
     expect(finishedTasks[1].descricao).toEqual("Tarefa 2");
@@ -428,7 +428,7 @@ test.group("TaskService", (group) => {
 
       paginationData.withPagination = true
     const finishedTasks = await taskService.query(paginationData, {
-      user_id: users[0].id,
+      userId: users[0].id,
       finished: true,
     });
     expect((finishedTasks as any).data.length).toEqual(2);

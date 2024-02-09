@@ -24,4 +24,5 @@ Route.group(() => {
     require("./user/user.routes");
     require("./authentication/auth.routes");
     require('./task/task.routes')
+    require('./sharing-task/sharing-task.routes')
 })

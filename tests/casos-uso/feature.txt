@@ -1,36 +1,36 @@
 O sistema de gerenciamento de tarefas pode ter diversos casos de uso, incluindo:
 
-1-Registro de Usuário:
+1-Registro de Usuário: (Feito)
 
-Permitir que usuários se cadastrem no sistema.
+Permitir que usuários se cadastrem no sistema (Feito).
 
 2-Autenticação:
 
-Garantir que apenas usuários autenticados possam acessar suas tarefas.
+Garantir que apenas usuários autenticados possam acessar suas tarefas (Feito).
 
 3-Adição de Tarefas:
 
-Usuários devem ser capazes de adicionar novas tarefas à sua lista.
+Usuários devem ser capazes de adicionar novas tarefas à sua lista (Feito).
 
 4-Atualização de Tarefas:
 
-Permitir a edição de tarefas existentes.
+Permitir a edição de tarefas existentes (Feito).
 
 5-Exclusão de Tarefas:
 
-Possibilitar que usuários removam tarefas quando concluídas ou não necessárias.
+Possibilitar que usuários removam tarefas quando concluídas ou não necessárias (Feito).
 
 6-Visualização de Tarefas:
 
-Exibir uma lista de tarefas para cada usuário.
+Exibir uma lista de tarefas para cada usuário (Feito).
 
 7-Priorização de Tarefas:
 
-Opção para definir prioridades ou categorias para tarefas.
+Opção para definir prioridades ou categorias para tarefas (Feito).
 
 8-Conclusão de Tarefas:
 
-Marcar tarefas como concluídas.
+Marcar tarefas como concluídas (Feito).
 
 9-Notificações:
 
@@ -38,7 +38,7 @@ Implementar notificações para prazos ou eventos importantes.
 
 10-Compartilhamento de Tarefas:
 
-Permitir que os usuários compartilhem tarefas com outros usuários.
+Permitir que os usuários compartilhem tarefas com outros usuários (Feito)
 
 11-Histórico de Atividades:
 

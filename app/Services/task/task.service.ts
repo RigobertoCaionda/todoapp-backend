@@ -5,14 +5,13 @@ import { TaskProps } from "App/Types/task.type";
 export class TaskService {
   constructor(private taskRepository: TaskRepository) {}
 
-  public async query(pagination: IPagination, filters?: any) {
-    const relations = ["priority", "user"];
+  public async query(pagination: IPagination, filter?: any) {
 
-    return await this.taskRepository.findAll(pagination, relations, filters);
+    return await this.taskRepository.findAllWithAssociation(pagination, filter);
   }
 
   public async findOne(id: number) {
-    return await this.taskRepository.findById(id, ["priority", "user"]);
+    return await this.taskRepository.findIdWithAssociation(id);
   }
 
   public async execute(taskDto: TaskProps) {
