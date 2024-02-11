@@ -23,7 +23,7 @@ async function beforeEachSetup() {
   };
 }
 
-test.group("UserService", (group) => {
+test.group("SharingTaskService", (group) => {
   group.each.setup(async () => {
     await Database.beginGlobalTransaction();
     return async () => await Database.rollbackGlobalTransaction();

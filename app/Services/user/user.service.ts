@@ -23,7 +23,7 @@ export class UserService {
       }
     }
 
-    if (!userDto.nome) {
+    if (!userDto.name) {
       return {
         error: "Name is required",
       };

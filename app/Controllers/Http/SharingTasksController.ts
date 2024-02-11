@@ -1,6 +1,5 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import { Util } from 'App/Helpers/Util';
-import { IPagination } from 'App/Helpers/contracts/pagination';
 import { SharingTaskRepository } from 'App/Repositories/sharing-task.repository';
 import { SharingTaskService } from 'App/Services/sharing-task/sharing-task.service';
 import { SharingTaskProps } from 'App/Types/sharing-task.type';

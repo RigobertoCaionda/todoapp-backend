@@ -19,8 +19,12 @@ export default abstract class BaseRepository {
     return this.transformResult(query);
   }
 
-  public async create(modelPayload) {
+  public async create(modelPayload, trx?) {
     try {
+      if(trx) {
+        const data = await this.model.create(modelPayload, trx);
+        return data.serialize();
+      }
       const data = await this.model.create(modelPayload);
       return data.serialize();
     } catch (error) {

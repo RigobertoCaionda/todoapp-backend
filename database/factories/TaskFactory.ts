@@ -13,13 +13,13 @@ export const TaskFactory = Factory.define(Task, async ({ faker }) => {
     {
       age: faker.number.int({ min: 20, max: 60 }),
       email: faker.internet.email(),
-      nome: faker.person.fullName(),
+      name: faker.person.fullName(),
       password: faker.internet.password()
     }
   );
 
   return {
-    descricao: faker.lorem.words({ min: 1, max: 3 }),
+    description: faker.lorem.words({ min: 1, max: 3 }),
     priorityId: priority.id,
     userId: user.id,
   };

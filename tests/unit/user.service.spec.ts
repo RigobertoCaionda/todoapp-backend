@@ -22,7 +22,7 @@ async function beforeEachSetup() {
       email: "bro@gmail.com",
       password: "123",
       age: 26,
-      nome: 'Bro Gomes'
+      name: 'Bro Gomes'
     },
   };
 }
@@ -76,7 +76,7 @@ test.group("UserService", (group) => {
       id: 2,
       email: "bro@gmail.com",
       age: 26,
-      nome: "Bro Gomes",
+      name: "Bro Gomes",
     };
     const { userService } = await setup();
     const result = await userService.execute(inputUserData);
@@ -101,7 +101,7 @@ test.group("UserService", (group) => {
     assert,
   }) => {
     const { inputUserData } = await beforeEachSetup();
-    inputUserData.nome = "";
+    inputUserData.name = "";
     const { userService } = await setup();
 
     const result = await userService.execute(inputUserData);
@@ -136,7 +136,7 @@ test.group("UserService", (group) => {
     let inputUserData = {
       email: "pedro@gmail.com",
       age: 76,
-      nome: "Jorge",
+      name: "Jorge",
     };
 
     const { userService } = await setup();
@@ -147,7 +147,7 @@ test.group("UserService", (group) => {
       email: result.email,
       age: result.age,
       id: result.id,
-      nome: result.nome,
+      name: result.name,
     };
 
     assert.equal((result)?.id, user.id);

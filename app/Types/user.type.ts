@@ -3,5 +3,5 @@ export type UserProps = {
   password?: string
   age?: number,
   email?: string
-  nome?: string
+  name?: string
 }

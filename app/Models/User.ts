@@ -16,7 +16,7 @@ export default class User extends BaseModel {
   public age: number
 
   @column()
-  public nome: string
+  public name: string
 
   @column()
   public rememberMeToken: string | null

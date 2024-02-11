@@ -13,9 +13,8 @@ export default class TasksController {
   }
 
   public async index({ response, request }: HttpContextContract) {
-
     const pagination: IPagination = Util.transformPagination(request.all());
-    const filters = request.qs().filters; // Consegue pegar objeto filters
+    const filters = request.qs().filters; // Pegar filters como objeto
 
     const result = await this.taskService.query(pagination, filters);
     return response.json(result);
@@ -38,12 +37,12 @@ export default class TasksController {
 
   public async store({ response, request, auth }: HttpContextContract) {
     const userId = auth.user?.id;
-    const { descricao, endDate, startDate, finished, priorityId } =
+    const { description, endDate, startDate, finished, priorityId } =
       request.all() as TaskProps;
 
     try {
       const result = await this.taskService.execute({
-        descricao,
+        description,
         endDate,
         startDate,
         finished,
@@ -57,13 +56,13 @@ export default class TasksController {
   }
   public async update({ response, request, params, auth }: HttpContextContract) {
     const userId = auth.user?.id;
-    const { descricao, endDate, startDate, finished, priorityId } =
+    const { description, endDate, startDate, finished, priorityId } =
       request.all() as TaskProps;
     const { id } = params;
 
     try {
       const result = await this.taskService.update(id, {
-        descricao,
+        description,
         endDate,
         startDate,
         finished,

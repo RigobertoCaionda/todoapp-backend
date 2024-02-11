@@ -1,4 +1,6 @@
+import Database from "@ioc:Adonis/Lucid/Database";
 import { IPagination } from "App/Helpers/contracts/pagination";
+import TaskActivityHistory from "App/Models/TaskActivityHistory";
 import { TaskRepository } from "App/Repositories/task.repository";
 import { TaskProps } from "App/Types/task.type";
 
@@ -14,8 +16,8 @@ export class TaskService {
     return await this.taskRepository.findIdWithAssociation(id);
   }
 
-  public async execute(taskDto: TaskProps) {
-    if (!taskDto.descricao) {
+  public async execute(taskDto) {
+    if (!taskDto.description) {
       return {
         error: "Description is required",
       };
@@ -30,7 +32,20 @@ export class TaskService {
         error: "UserId is required",
       };
     }
-    return await this.taskRepository.create(taskDto);
+    let trx;
+    let action = 'created';
+    try {
+      trx = await Database.transaction();
+      const task = await this.taskRepository.create(taskDto, { client: trx });
+          await TaskActivityHistory.create({ userId: taskDto.userId, taskId: task.id, action }, { client: trx });
+           await trx.commit();
+           return task;
+    } catch (error) {
+      if (trx) {
+        await trx.rollback();
+      }
+       return error;
+    }
   }
 
   public async update(id: number, taskDto: TaskProps) {

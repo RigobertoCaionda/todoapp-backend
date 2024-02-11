@@ -9,7 +9,7 @@ export default class Task extends BaseModel {
   public id: number;
 
   @column()
-  public descricao: string;
+  public description: string;
 
   @column()
   public priorityId: number;

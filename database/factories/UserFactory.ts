@@ -5,7 +5,7 @@ export const UserFactory = Factory.define(User, ({ faker }) => {
   return {
     age: faker.number.int({ min: 10, max: 100 }),
     email: faker.internet.email(),
-    nome: faker.person.fullName(),
+    name: faker.person.fullName(),
     password: faker.internet.password()
   };
 }).build();

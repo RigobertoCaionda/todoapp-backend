@@ -1,19 +1,16 @@
-import SharingTask from "App/Models/SharingTask";
+import TaskActivityHistory from "App/Models/TaskActivityHistory";
 import BaseRepository from "./base.repository";
 import { IPagination } from "App/Helpers/contracts/pagination";
 
-export class SharingTaskRepository extends BaseRepository {
+export class TaskActivityHistoryRepository extends BaseRepository {
   constructor() {
-    super(SharingTask);
+    super(TaskActivityHistory);
   }
 
   async findAllWithAssociation(pagination: IPagination, filter?: any) {
     if (pagination.withPagination) {
-      const sharingTasks = await SharingTask.query()
+      const taskActivityHistories = await TaskActivityHistory.query()
         .where((builder) => {
-          if (filter && filter.finished) {
-            builder.where("finished", filter.finished);
-          }
           if (filter && filter.userId) {
             builder.where("user_id", filter.userId);
           }
@@ -22,18 +19,15 @@ export class SharingTaskRepository extends BaseRepository {
         .preload("user")
         .paginate(pagination.page || 1, pagination.perPage || 5);
       return {
-        total: sharingTasks.total,
-        page: sharingTasks.currentPage,
-        perPage: sharingTasks.perPage,
-        data: sharingTasks.all().map((d) => d.toJSON()),
+        total: taskActivityHistories.total,
+        page: taskActivityHistories.currentPage,
+        perPage: taskActivityHistories.perPage,
+        data: taskActivityHistories.all().map((d) => d.toJSON()),
       };
     }
 
-    return await SharingTask.query()
+    return await TaskActivityHistory.query()
       .where((builder) => {
-        if (filter && filter.finished) {
-          builder.where("finished", filter.finished);
-        }
         if (filter && filter.userId) {
           builder.where("user_id", filter.userId);
         }

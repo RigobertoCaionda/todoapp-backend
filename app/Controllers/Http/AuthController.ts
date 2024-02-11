@@ -6,23 +6,23 @@ export default class AuthController {
     const { email, password } = request.all();
 
     if(!email) {
-      return response.json('Email é obrigatório')
+      return response.json('Email is required')
     }
     const user = await User.findBy('email', email)
 
     if(!user?.id) {
-      return response.json('Usuário e/ou senha errados')
+      return response.json('User and/or password are incorrect')
     }
 
     try {
       const token = await auth.attempt(email, password, {
         expiresIn: "2 days",
       });
-      return response.json({
+      return response.status(200).json({
         token
       })
     } catch (error) {
-      return response.json("Usuário e/ou senha errados");
+      return response.json("User and/or password are incorrect");
     }
 
   }

@@ -1,9 +1,9 @@
 export type TaskProps = {
-  id?: number
-  descricao?: string,
-  priorityId?: number,
-  userId?: number,
-  startDate?: string
-  endDate?: string
-  finished?: boolean
-}
+  id?: number;
+  description?: string;
+  priorityId?: number;
+  userId?: number;
+  startDate?: string;
+  endDate?: string;
+  finished?: boolean;
+};

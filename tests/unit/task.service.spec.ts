@@ -98,7 +98,7 @@ test.group("TaskService", (group) => {
     const user = await UserFactory.create();
     const priority = await PriorityFactory.create();
     let inpuTaskData = {
-      descricao: "Task de teste",
+      description: "Task de teste",
       startDate: undefined,
       endDate: undefined,
       finished: undefined,
@@ -106,21 +106,17 @@ test.group("TaskService", (group) => {
       priorityId: priority.id,
     };
 
-    const inputTaskDataSnackCase = {
-      descricao: "Task de teste",
-      start_date: undefined,
-      end_date: undefined,
-      finished: undefined,
-      user_id: user.id,
-      priority_id: priority.id,
+    const result = await taskService.execute(inpuTaskData);
+    const mappedResult = {
+      description: result.description,
+      startDate: result.start_date,
+      endDate: result.end_date,
+      finished: result.finished,
+      userId: result.user_id,
+      priorityId: result.priority_id
     };
 
-    const result = await taskService.execute(inpuTaskData);
-    delete result.created_at;
-    delete result.updated_at;
-    delete result.id;
-
-    expect(result).toStrictEqual(inputTaskDataSnackCase);
+    expect(mappedResult).toStrictEqual(inpuTaskData);
   });
 
   test("should not create a task successfully if description is undefined or empty", async ({
@@ -130,7 +126,7 @@ test.group("TaskService", (group) => {
     const user = await UserFactory.create();
     const priority = await PriorityFactory.create();
     let inpuTaskData = {
-      descricao: "",
+      description: "",
       startDate: undefined,
       endDate: undefined,
       finished: undefined,
@@ -149,7 +145,7 @@ test.group("TaskService", (group) => {
 
     const priority = await PriorityFactory.create();
     let inpuTaskData = {
-      descricao: "Task de Teste",
+      description: "Task de Teste",
       startDate: undefined,
       endDate: undefined,
       finished: undefined,
@@ -168,7 +164,7 @@ test.group("TaskService", (group) => {
     const user = await UserFactory.create();
 
     let inpuTaskData = {
-      descricao: "Task de Teste",
+      description: "Task de Teste",
       startDate: undefined,
       endDate: undefined,
       finished: undefined,
@@ -187,7 +183,7 @@ test.group("TaskService", (group) => {
     const result = await taskService.findOne(task.id);
 
     expect((result as any).id).toEqual(task.id);
-    expect((result as any).descricao).toEqual(task.descricao);
+    expect((result as any).description).toEqual(task.description);
     expect((result as any).priority).toBeDefined();
     expect((result as any).user).toBeDefined();
   });
@@ -230,7 +226,7 @@ test.group("TaskService", (group) => {
 
     const task = await TaskFactory.create();
     const inputTaskData = {
-      descricao: "Nova Descrição",
+      description: "Nova Descrição",
       userId: task.userId,
       priorityId: priorities[1].id,
       finished: true,
@@ -238,7 +234,7 @@ test.group("TaskService", (group) => {
     const updatedTask = await taskService.update(task.id, inputTaskData);
 
     expect(updatedTask.id).toEqual(task.id);
-    expect(updatedTask.descricao).toEqual(inputTaskData.descricao);
+    expect(updatedTask.description).toEqual(inputTaskData.description);
     expect(updatedTask.userId).toEqual(inputTaskData.userId);
     expect(updatedTask.priorityId).toEqual(inputTaskData.priorityId);
     expect(updatedTask.finished).toEqual(1);
@@ -249,7 +245,7 @@ test.group("TaskService", (group) => {
 
     const task = await TaskFactory.create();
     const inputTaskData = {
-      descricao: "Nova Descrição",
+      description: "Nova Descrição",
       userId: 1000,
       finished: true,
     };
@@ -265,7 +261,7 @@ test.group("TaskService", (group) => {
      const { taskService } = await setup();
 
      const inputTaskData = {
-       descricao: "Nova Descrição",
+       description: "Nova Descrição",
        userId: 1000,
        finished: true,
      };
@@ -282,31 +278,31 @@ test.group("TaskService", (group) => {
     const priority = await PriorityFactory.create();
 
     await taskService.execute({
-      descricao: "Tarefa 101",
+      description: "Tarefa 101",
       priorityId: priority.id,
       userId: users[0].id,
     });
     await taskService.execute({
-      descricao: "Tarefa 102",
+      description: "Tarefa 102",
       priorityId: priority.id,
       userId: users[0].id,
     });
     await taskService.execute({
-      descricao: "Tarefa 103",
+      description: "Tarefa 103",
       priorityId: priority.id,
       userId: users[0].id,
     });
     await taskService.execute({
-      descricao: "Tarefa 104",
+      description: "Tarefa 104",
       priorityId: priority.id,
       userId: users[1].id,
     });
 
     const userTasks = await taskService.findUserTasks(users[0].id);
     expect((userTasks as any).length).toEqual(3);
-    expect((userTasks[0] as any).descricao).toEqual("Tarefa 101");
-    expect((userTasks[1] as any).descricao).toEqual("Tarefa 102");
-    expect((userTasks[2] as any).descricao).toEqual("Tarefa 103");
+    expect((userTasks[0] as any).description).toEqual("Tarefa 101");
+    expect((userTasks[1] as any).description).toEqual("Tarefa 102");
+    expect((userTasks[2] as any).description).toEqual("Tarefa 103");
   });
   test("should not list successfully all tasks belonging to a certain user when userId is undefined", async ({
     expect,
@@ -323,25 +319,25 @@ test.group("TaskService", (group) => {
     const user = await UserFactory.create();
     const priority = await PriorityFactory.create();
     await taskService.execute({
-      descricao: "tarefa 1",
+      description: "tarefa 1",
       finished: true,
       userId: user.id,
       priorityId: priority.id,
     });
     await taskService.execute({
-      descricao: "tarefa 2",
+      description: "tarefa 2",
       finished: true,
       userId: user.id,
       priorityId: priority.id,
     });
     await taskService.execute({
-      descricao: "tarefa 3",
+      description: "tarefa 3",
       finished: true,
       userId: user.id,
       priorityId: priority.id,
     });
     await taskService.execute({
-      descricao: "tarefa 4",
+      description: "tarefa 4",
       userId: user.id,
       priorityId: priority.id,
     });
@@ -356,25 +352,25 @@ test.group("TaskService", (group) => {
     const user = await UserFactory.create();
     const priority = await PriorityFactory.create();
     await taskService.execute({
-      descricao: "tarefa 1",
+      description: "tarefa 1",
       finished: true,
       userId: user.id,
       priorityId: priority.id,
     });
     await taskService.execute({
-      descricao: "tarefa 2",
+      description: "tarefa 2",
       finished: true,
       userId: user.id,
       priorityId: priority.id,
     });
     await taskService.execute({
-      descricao: "tarefa 3",
+      description: "tarefa 3",
       finished: true,
       userId: user.id,
       priorityId: priority.id,
     });
     await taskService.execute({
-      descricao: "tarefa 4",
+      description: "tarefa 4",
       userId: user.id,
       priorityId: priority.id,
     });
@@ -393,15 +389,15 @@ test.group("TaskService", (group) => {
     const task2 = await TaskFactory.create()
     const task3 = await TaskFactory.create()
     const task4 = await TaskFactory.create()
-    await task1.merge({ descricao: 'Tarefa 1', finished: true, userId: users[0].id }).save()
-    await task2.merge({ descricao: 'Tarefa 2', finished: true, userId: users[0].id }).save()
-    await task3.merge({ descricao: 'Tarefa 3', userId: users[0].id }).save()
-    await task4.merge({ descricao: 'Tarefa 4', finished: true, userId: users[1].id }).save()
+    await task1.merge({ description: 'Tarefa 1', finished: true, userId: users[0].id }).save()
+    await task2.merge({ description: 'Tarefa 2', finished: true, userId: users[0].id }).save()
+    await task3.merge({ description: 'Tarefa 3', userId: users[0].id }).save()
+    await task4.merge({ description: 'Tarefa 4', finished: true, userId: users[1].id }).save()
 
     const finishedTasks = await taskService.query(paginationData, {'userId': users[0].id, 'finished': true  })
     expect((finishedTasks as any).length).toEqual(2)
-    expect(finishedTasks[0].descricao).toEqual("Tarefa 1");
-    expect(finishedTasks[1].descricao).toEqual("Tarefa 2");
+    expect(finishedTasks[0].description).toEqual("Tarefa 1");
+    expect(finishedTasks[1].description).toEqual("Tarefa 2");
   })
 
   test("should list all finished tasks of a certain user when pagination is true", async ({
@@ -416,14 +412,14 @@ test.group("TaskService", (group) => {
     const task3 = await TaskFactory.create();
     const task4 = await TaskFactory.create();
     await task1
-      .merge({ descricao: "Tarefa 1", finished: true, userId: users[0].id })
+      .merge({ description: "Tarefa 1", finished: true, userId: users[0].id })
       .save();
     await task2
-      .merge({ descricao: "Tarefa 2", finished: true, userId: users[0].id })
+      .merge({ description: "Tarefa 2", finished: true, userId: users[0].id })
       .save();
-    await task3.merge({ descricao: "Tarefa 3", userId: users[0].id }).save();
+    await task3.merge({ description: "Tarefa 3", userId: users[0].id }).save();
     await task4
-      .merge({ descricao: "Tarefa 4", finished: true, userId: users[1].id })
+      .merge({ description: "Tarefa 4", finished: true, userId: users[1].id })
       .save();
 
       paginationData.withPagination = true
@@ -432,7 +428,7 @@ test.group("TaskService", (group) => {
       finished: true,
     });
     expect((finishedTasks as any).data.length).toEqual(2);
-    expect((finishedTasks as any).data[0].descricao).toEqual("Tarefa 1");
-    expect((finishedTasks as any).data[1].descricao).toEqual("Tarefa 2");
+    expect((finishedTasks as any).data[0].description).toEqual("Tarefa 1");
+    expect((finishedTasks as any).data[1].description).toEqual("Tarefa 2");
   });
 });

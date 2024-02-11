@@ -15,21 +15,21 @@ export default class UsersController {
     const body = request.all()
     const pagination: IPagination = Util.transformPagination(body)
     const users = await this.userService.query(pagination);
-    return response.json(users)
+    return response.status(200).json(users)
   }
 
   public async store({ request, response }: HttpContextContract) {
-    const { password, age, email, nome } = request.all() as UserProps
+    const { password, age, email, name } = request.all() as UserProps
 
     try {
       const result = await this.userService.execute({
         password,
         age,
         email,
-        nome,
+        name,
       });
 
-      return response.json(result)
+      return response.status(201).json(result)
     } catch (error) {
       return response.json(error)
     }
@@ -43,9 +43,9 @@ export default class UsersController {
 
   public async update({ params, request, response }: HttpContextContract) {
     const { id } = params;
-    const { age, email, nome, password } = request.all() as UserProps;
+    const { age, email, name, password } = request.all() as UserProps;
     try {
-     await this.userService.update(id, { age, email, nome, password });
+     await this.userService.update(id, { age, email, name, password });
       return response.json('User updated successfully')
     } catch (error) {
       return response.json(error)

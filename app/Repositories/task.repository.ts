@@ -12,7 +12,6 @@ export class TaskRepository extends BaseRepository {
       const tasks = await Task.query()
       .where((builder) => {
         if (filter && filter.finished) {
-          console.log(filter.finished);
           builder.where("finished", filter.finished);
         }
         if (filter && filter.userId) {
